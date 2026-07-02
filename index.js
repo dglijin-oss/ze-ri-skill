@@ -1,17 +1,17 @@
 /**
  * 择日学 Skill - 核心算法
- * 作者：天工长老
- * 版本：v1.1
- * 创建：2026 年 3 月 29 日
- * 更新：2026 年 3 月 30 日 - 添加神煞系统、时辰吉凶
+ * 作者:天工长老
+ * 版本:v1.1
+ * 创建:2026 年 3 月 29 日
+ * 更新:2026 年 3 月 30 日 - 添加神煞系统、时辰吉凶
  */
 
 // 建除十二神计算
 function getJianChu(year, month, day) {
-  // 简化算法：以月建为基准
+  // 简化算法:以月建为基准
   const monthJian = ['建', '除', '满', '平', '定', '执', '破', '危', '成', '收', '开', '闭'];
   
-  // 计算月建（简化：正月建寅）
+  // 计算月建(简化:正月建寅)
   const lunarMonth = ((month - 1 + 2) % 12); // 调整为农历月
   
   // 计算日建除
@@ -20,7 +20,7 @@ function getJianChu(year, month, day) {
   return monthJian[dayIndex];
 }
 
-// 黄道黑道计算（简化版）
+// 黄道黑道计算(简化版)
 function getHuangDao(year, month, day) {
   const huangDao = ['青龙', '明堂', '天刑', '朱雀', '金匮', '天德', '白虎', '玉堂', '天牢', '玄武', '司命', '勾陈'];
   const dayIndex = (year + month + day) % 12;
@@ -47,7 +47,7 @@ function getHuangDaoJiXiong(huangDao) {
   return jiXiong[huangDao] || '平';
 }
 
-// 宜忌查询（简化版）
+// 宜忌查询(简化版)
 function getYiJi(jianChu, huangDao) {
   const yiMap = {
     '建': ['上任', '出行', '安床'],
@@ -108,19 +108,19 @@ function zeRi(year, month, day, eventType = 'general') {
   else conclusion = '大凶';
   
   return {
-    日期：`${year}年${month}月${day}日`,
-    建除：jianChu,
-    建除吉凶：jianChuJiXiong,
-    黄道：huangDao,
-    黄道吉凶：huangDaoJiXiong,
-    宜：yiJi.宜，
-    忌：yiJi.忌，
-    综合评分：score,
-    综合判断：conclusion
+    日期:`${year}年${month}月${day}日`,
+    建除:jianChu,
+    建除吉凶:jianChuJiXiong,
+    黄道:huangDao,
+    黄道吉凶:huangDaoJiXiong,
+    宜:yiJi.宜,
+    忌:yiJi.忌,
+    综合评分:score,
+    综合判断:conclusion
   };
 }
 
-// 择日推荐（给定月份推荐吉日）
+// 择日推荐(给定月份推荐吉日)
 function tuiJianJiRi(year, month, eventType = '嫁娶', limit = 5) {
   const daysInMonth = new Date(year, month, 0).getDate();
   const jiRiList = [];
@@ -129,11 +129,11 @@ function tuiJianJiRi(year, month, eventType = '嫁娶', limit = 5) {
     const result = zeRi(year, month, day);
     if (result.综合评分 >= 65) {
       if (eventType === '嫁娶' && result.宜.includes('嫁娶')) {
-        jiRiList.push({ ...result, 日：day });
+        jiRiList.push({ ...result, 日:day });
       } else if (eventType === '开业' && result.宜.includes('开业')) {
-        jiRiList.push({ ...result, 日：day });
+        jiRiList.push({ ...result, 日:day });
       } else if (eventType === 'general') {
-        jiRiList.push({ ...result, 日：day });
+        jiRiList.push({ ...result, 日:day });
       }
     }
   }
@@ -141,9 +141,9 @@ function tuiJianJiRi(year, month, eventType = '嫁娶', limit = 5) {
   return jiRiList.slice(0, limit);
 }
 
-// ========== v1.1 新增：神煞系统 ==========
+// ========== v1.1 新增:神煞系统 ==========
 
-// 常用神煞计算（简化版）
+// 常用神煞计算(简化版)
 function getShenSha(year, month, day) {
   const shenSha = [];
   const dayGan = (year + month + day) % 10; // 简化日干
@@ -155,7 +155,7 @@ function getShenSha(year, month, day) {
   // 月德贵人
   if ([2, 6, 10].includes(month)) shenSha.push('月德');
   
-  // 天赦日（春戊寅、夏甲午、秋戊申、冬甲子）
+  // 天赦日(春戊寅、夏甲午、秋戊申、冬甲子)
   if ((month === 3 && day === 15) || (month === 6 && day === 21) || 
       (month === 9 && day === 27) || (month === 12 && day === 3)) {
     shenSha.push('天赦');
@@ -200,7 +200,7 @@ function getShenShaJiXiong(shenSha) {
   return { jiShen: jiCount, xiongShen: xiongCount };
 }
 
-// 时辰吉凶（简化版）
+// 时辰吉凶(简化版)
 function getShiChenJiXiong(hour) {
   const shiChen = [
     { name: '子时', time: '23:00-01:00' },
@@ -221,9 +221,9 @@ function getShiChenJiXiong(hour) {
   const jiXiong = ['吉', '凶', '吉', '吉', '凶', '吉', '凶', '吉', '吉', '凶', '吉', '凶'];
   
   return {
-    时辰：shiChen[shiChenIndex].name,
-    时间：shiChen[shiChenIndex].time,
-    吉凶：jiXiong[shiChenIndex]
+    时辰:shiChen[shiChenIndex].name,
+    时间:shiChen[shiChenIndex].time,
+    吉凶:jiXiong[shiChenIndex]
   };
 }
 
